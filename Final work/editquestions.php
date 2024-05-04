@@ -46,7 +46,7 @@ try {
                 } else {
                     $title = 'An error has occurred';
                     $allowedFormats = 'JPG, JPEG, PNG, GIF';
-                    $output = "Sorry! You either have picture duplicate or is not in the following formats: $allowedFormats.";
+                    $output = "Sorry! Your picture is not in the following formats: $allowedFormats.";
                 }
             } else {
                 $title = 'An error has occurred';
