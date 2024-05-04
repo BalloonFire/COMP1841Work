@@ -2,17 +2,17 @@
 session_start();
 
 // Redirect to login page if not logged in
-if (!isset($_SESSION['id'])) {
-    header('Location: login.php');
+if (!isset($_SESSION['id']) || $_SESSION['admin'] !== 'Y') {
+    header('Location: ../login.php');
     exit();
 }
 try {
-    include 'includes/DatabaseConnection.php';
-    include 'includes/DatabaseFunctions.php';
+    include '../includes/DatabaseConnection.php';
+    include '../includes/DatabaseFunctions.php';
     // Check for form submission
     if (isset($_POST['submit'])) {
         try {
-            include 'includes/uploadFile.php';
+            include '../includes/uploadFile.php';
     
             // Check if 'id' is set in the form
             if (isset($_POST['id'])) {
@@ -21,7 +21,7 @@ try {
                 $QTitle = $_POST['QTitle'];
                 $QContent = $_POST['QContent'];
                 $file = $_FILES['fileToUpload'];
-                $uploadDirectory = "uploads/";
+                $uploadDirectory = "../uploads/";
                 $ModuleID = $_POST['ModuleID'];
     
                 // Retrieve existing image path
@@ -41,7 +41,7 @@ try {
                     updateQuestions($pdo, $id, $QContent, $QTitle, $uploadedFilePath, $ModuleID);
     
                     // Redirect to the questions list
-                    header('location: questions.php');
+                    header('location: ../admin/questions.php');
                     exit();
                 } else {
                     $title = 'An error has occurred';
@@ -64,7 +64,7 @@ try {
 
         // Output the HTML form
         ob_start();
-        include 'templates/editquestions.html.php';
+        include '../templates/editquestions.html.php';
         $output = ob_get_clean();
     }
 } catch (PDOException $e) {
@@ -73,5 +73,5 @@ try {
 }
 
 // Include the layout template
-include 'templates/layout.html.php';
+include '../templates/adminlayout.html.php';
 ?>
